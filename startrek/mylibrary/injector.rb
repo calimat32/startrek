@@ -1,0 +1,70 @@
+class Injector
+
+	attr_accessor :damage
+        @@capacity = 100       
+	@@capacity_overdrive = 99 
+	@@overdrive_time = 100
+	@@injector_count = 0 
+	
+	
+ 	 
+	def initialize(damage=0)
+		@damage = damage
+		
+		if damage != 100
+		@@injector_count += 1
+		else
+		@@injector_count += 0
+		end
+	end
+
+	def inject
+	return @@capacity - @damage
+	end
+
+	def maxoverdrive
+	return inject + @@capacity_overdrive
+	end
+
+	def time(extra = 0) 
+		if inject == @@capacity
+			return "Infinity"
+		elsif inject == maxoverdrive
+			return 1
+		else
+			overdrive(extra)
+		end
+	end
+
+	def overdrive(extra)
+		time = @@overdrive_time	    
+		time = time - extra
+		raise Exception unless extra <= @@capacity_overdrive	
+		return time
+		
+	end
+
+	def self.inject_Enterprise(flux,value)
+		if(flux==0)
+			return flux 
+				else
+					return flux += value
+				
+		end
+		
+	end		
+
+	def self.destroy
+		@@injector_count -= 1		
+		return	
+	end
+
+
+	def self.count
+		
+		return @@injector_count
+	end	
+
+	
+	
+end

@@ -1,0 +1,58 @@
+require_relative "../mylibrary/reactor"
+require_relative "../mylibrary/injector"
+describe Reactor do
+ 
+	 before(:all) do
+    	 @enterprise = Reactor.new()
+	 @injectorA = @enterprise.injectorA
+	 @injectorB = @enterprise.injectorB
+         @injectorC = @enterprise.injectorC
+	 
+	 end 
+	 
+	describe "number of injectors of reactor" do
+
+		it"is 3"do
+			
+			Reactor.count_injectors().should eq(3)		
+		end
+
+	end
+	
+
+	describe "total flux needed" do
+		it "calculates total flux for 3 engines based on lightspeed"do
+			Reactor.new().total(100).should eq(300)	
+		end
+	end
+
+	describe "total flux actually given" do
+		it "calculates total flux actually given by the injectors"do
+			Reactor.new().given(@injectorA.inject,@injectorB.inject,@injectorC.inject).should eq(300)
+
+		end
+	end
+
+	describe "overdrive needed" do
+		it "calculates the overdrive needed for each injector to accomplish lightspeed desired"do
+		lightspeed = 90
+		damageA = 20
+		damageB = 10 
+		damageC = 0	
+		#Reactor.new().overdrive_needed(lightspeed,damageA,damageB,damageC).should eq(10)		
+		end
+	end
+	
+	describe "injectorA" do
+
+	it "has an injector A" do
+	Reactor.injectorA.should be_kind_of Injector
+	end
+	end
+	
+
+ 
+	
+
+end
+	

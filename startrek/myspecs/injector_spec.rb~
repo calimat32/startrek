@@ -1,0 +1,92 @@
+require_relative "../mylibrary/injector"
+describe Injector do
+	
+	describe "destroy" do
+		
+		it "destroys an injector" do
+		Injector.new()
+		Injector.destroy
+		Injector.count.should eq(0)
+		end
+		
+	end   
+	
+
+	
+	describe "count" do
+		it "counts istelf only if working" do
+			Injector.new()
+			Injector.new()
+			Injector.new()
+			Injector.new(100)
+			count = Injector.count
+			count.should eq(3)
+			
+		end	
+	end	
+
+	
+	
+	
+	describe "the injector"do
+	it "has damage" do
+		Injector.new(0).should respond_to :damage	
+	end 
+	end
+
+	describe "inject" do
+		it "should inject depending on damage" do
+		Injector.new(70).inject().should eq(30)	
+		Injector.new(68).inject().should eq(32)
+		Injector.new(0).inject().should eq(100)
+		end
+	
+	describe "flux calculation" do
+		it "calculates the flux for each injector based on damage and lightspeed desired and if flux=0 no added value" do
+		flux = 80
+		value = 10 
+		Injector.inject_Enterprise(flux,value).should eq(90)	
+		end
+	end
+		
+		
+	
+
+	
+	describe "maxoverdrive" do
+	
+		it "injects a maximum of 99m/s over capacity" do
+			Injector.new(20).maxoverdrive().should eq(179)
+		end
+
+		it "displays an error if theres more than 99mg/s added" do	
+			Injector.new.overdrive(100).should raise_error		
+		end
+
+			
+ 	
+	end
+
+   		
+	
+
+	describe "functional time" do
+	
+		it " will have infinite time if no damage "do
+			Injector.new(0).time().should eq("Infinity")
+		end
+
+		it " looses one minute for every mg/s in overdrive "do 
+			Injector.new(70).time(1).should eq(99)
+			
+		end
+
+		it " lasts one minute when maxoverdrive" do
+			Injector.new(70).time(99).should eq(1)		
+		
+		end
+	
+	end
+
+end
+end

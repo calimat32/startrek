@@ -1,0 +1,109 @@
+require_relative 'injector'
+
+describe "an injector" do
+
+  before(:all) do
+    @injectorA = Injector.new()
+    @injectorB = Injector.new()
+    @injectorC = Injector.new()
+  end
+
+  it "case 1) is 100 mg/s with no damage at 100% light speed" do
+
+    lightspeed = 100
+    flux_A = @injectorA.flux(0,lightspeed)
+    flux_B = @injectorB.flux(0,lightspeed)
+    flux_C = @injectorC.flux(0,lightspeed)
+
+    flux_A.should eq(100)
+    flux_B.should eq(100)
+    flux_C.should eq(100)
+
+    #[@injectorA, @injectorB, @injectorC].each do |element|
+    #   element.time.should eq("Infinite")
+   # end
+
+  end
+
+  it "case 2) is 90 mg/s with no damage at 90% light speed" do
+
+    lightspeed = 90
+    flux_A = @injectorA.flux(0,lightspeed)
+    flux_B = @injectorB.flux(0,lightspeed)
+    flux_C = @injectorC.flux(0,lightspeed)
+
+    flux_A.should eq(90)
+    flux_B.should eq(90)
+    flux_C.should eq(90)
+  end
+
+  it "case 3) is 30 mg/s with no damage at 30% light speed" do
+
+    lightspeed = 30
+    flux_A = @injectorA.flux(0,lightspeed)
+    flux_B = @injectorB.flux(0,lightspeed)
+    flux_C = @injectorC.flux(0,lightspeed)
+
+    flux_A.should eq(30)
+    flux_B.should eq(30)
+    flux_C.should eq(30)
+  end
+
+  it "case 4) 90 mg/s, 100 mg/s, 110 mg/s with damage at 100% lightspeed" do
+
+    lightspeed = 100
+    flux_A = @injectorA.flux(20,lightspeed)
+    flux_B = @injectorB.flux(10,lightspeed)
+    flux_C = @injectorC.flux(0,lightspeed)
+    
+   value = Enterprise.new.added_value(lightspeed,flux_A,flux_B,flux_C,number_of_injectors)
+		@injectorA.flux_validation(flux_A,value).should eq(90)
+		@injectorB.flux_validation(flux_B,value).should eq(100)
+		@injectorC.flux_validation(flux_C,value).should eq(110)
+  end
+
+  it "case 5) 120 mg/s, 120 mg/s, 0 mg/s with damage at 80% lightspeed" do
+
+    lightspeed = 80
+    flux_A = @injectorA.flux(0,lightspeed)
+    flux_B = @injectorB.flux(0,lightspeed)
+    flux_C = @injectorC.flux(100,lightspeed)
+
+    flux_A.should eq(120)
+    flux_B.should eq(120)
+    flux_C.should eq(0)
+  end
+
+  it "case 6) 150 mg/s, 150 mg/s, 150 mg/s with no damage at 150% lightspeed" do
+
+    lightspeed = 150
+    flux_A = @injectorA.flux(0,lightspeed)
+    flux_B = @injectorB.flux(0,lightspeed)
+    flux_C = @injectorC.flux(0,lightspeed)
+
+    flux_A.should eq(150)
+    flux_B.should eq(150)
+    flux_C.should eq(150)
+  end
+
+  it "case 7) 150 mg/s, 150 mg/s, 120 mg/s with damage at 140% lightspeed"  do
+
+    lightspeed = 140
+    flux_A = @injectorA.flux(0,lightspeed)
+    flux_B = @injectorB.flux(0,lightspeed)
+    flux_C = @injectorC.flux(30,lightspeed)
+
+    flux_A.should eq(150)
+    flux_B.should eq(150)
+    flux_C.should eq(120)
+  end
+
+  it "is unable to comply" do
+    expect do
+	    lightspeed = 170
+	    flux_A = @injectorA.flux(20,lightspeed)
+	    flux_B = @injectorB.flux(50,lightspeed)
+	    flux_C = @injectorC.flux(40,lightspeed)
+    end.to raise_error
+  end
+end

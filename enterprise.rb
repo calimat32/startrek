@@ -1,0 +1,29 @@
+require_relative 'injector.rb'
+class Enterprise
+  	
+	attr_accessor :injectorA , :injectorB , :injectorC 
+	        
+        
+
+	def initialize(injector = Injector.new())
+	@injectorA = injector
+	@injectorB = injector
+	@injectorC = injector
+	
+	end
+        
+	def self.added_value(lightspeed,flux_A,flux_B,flux_C,number_of_injectors)
+	flux_total = 3*lightspeed
+	flux_sub_total = flux_A + flux_B + flux_C
+	value = (flux_total - flux_sub_total )/number_of_injectors	
+	return value
+	end
+        
+        
+ 			
+
+       
+         
+  	
+end
+

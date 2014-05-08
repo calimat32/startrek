@@ -1,0 +1,17 @@
+require 'spec_helper'
+require_relative 'injector'
+
+describe "an injector" do
+  it "is 100 mg/s with no damage" do
+    lightspeed = 100
+    flux_A = injectorA.flux(0,lightspeed)
+    flux_B = injectorB.flux(0,lightspeed)
+    flux_C = injectorC.flux(0,lightspeed)
+
+    flux_A.should eq(100)
+    flux_B.should eq(100)
+    flux_C.should eq(100)
+  end
+
+
+end
